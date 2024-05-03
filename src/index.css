@@ -1,0 +1,185 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.logo {
+  height: 6vh;
+}
+
+.home {
+  font-size: 16px;
+}
+
+.about {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.home:hover {
+  text-decoration: underline;
+  color: red !important;
+}
+
+.about:hover {
+  text-decoration: underline;
+  color: red !important;
+}
+
+.title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 70px;
+}
+
+.h1 {
+  font-size: 3.5rem;
+}
+
+#head-1 {
+  color: #eb4a4a;
+  margin-right: 15px;
+}
+
+.card {
+  margin-bottom: 50px;
+}
+
+.card-img-top {
+  height: 232px;
+}
+
+.start-100 {
+  left: 90% !important;
+
+}
+
+.navbar {
+  z-index: 9999;
+  position: sticky;
+  top: 0;
+  right: 0;
+  width: 100%;
+  /* height: 50px; */
+}
+
+.front-image {
+  width: 100%;
+
+}
+
+.image-1 {
+  right: 56px;
+  position: absolute;
+  top: 194px;
+}
+
+.image {
+  width: 100%;
+}
+
+
+#main-row {
+  margin-top: 34px;
+}
+
+.headlines {
+  font-family: "Rubik_Bubbles variant0", Tofu;
+  font-size: 68px;
+  text-decoration: underline;
+  letter-spacing: 5px;
+  padding: 25px 0 0 0;
+  background: -webkit-linear-gradient(#005a6c, #ffd400);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.headlines-1 {
+  font-family: "Rubik_Bubbles variant0", Tofu;
+  font-size: 68px;
+  text-decoration: underline;
+  letter-spacing: 5px;
+  padding: 0px 0 0 0;
+  background: -webkit-linear-gradient(#005a6c, #ffd400);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (max-width:762px) {
+  .image-1 {
+    right: 27px;
+    position: absolute;
+    top: 549px;
+  }
+
+}
+
+@media (max-width:889px) {
+  .image-1 {
+    right: 81px;
+    position: absolute;
+    top: 625px;
+  }
+
+  .col-md-6 {
+    width: 100% !important;
+  }
+}
+
+.toggle {
+  background-color: #fff;
+  width: 43px;
+  height: 39px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 0 50px 20px rgba(0, 0, 0, .1);
+  line-height: 1;
+  margin-right: 20px;
+}
+
+.input {
+  display: none;
+}
+
+.icon {
+  grid-column: 1 / 1;
+  grid-row: 1 / 1;
+  transition: transform 200ms;
+}
+
+.icon-dark {
+  height: 27px;
+
+}
+
+.icon--moon {
+  transition-delay: 100ms;
+}
+
+.icon--sun {
+  color: yellow;
+  transform: scale(0);
+}
+
+#switch:checked+.icon--moon {
+  transform: rotate(360deg) scale(0);
+}
+
+#switch:checked~.icon--sun {
+  color: yellow;
+  transition-delay: 200ms;
+  transform: scale(1) rotate(360deg);
+}
