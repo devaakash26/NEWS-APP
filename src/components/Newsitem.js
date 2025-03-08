@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import News from './News';
 import Loading from './Loading';
-import PropTypes from 'prop-types';
+import PropTypes, { element } from 'prop-types';
 import Template from './Template';
-import Typed from 'typed.js';
-
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export default class Newsitem extends Component {
-    static defaulPprops = {
-        country: 'in',
+    static defaultProps = {
+        country: 'us',
         pageSize: 3,
         category: 'general',
         img: 'front',
@@ -19,79 +17,83 @@ export default class Newsitem extends Component {
         second: 'Khabbar',
         card: false,
         authorColor: 'black',
+    };
 
-    }
     static propTypes = {
         country: PropTypes.string,
         pageSize: PropTypes.number,
         category: PropTypes.string,
         img: PropTypes.string,
         first: PropTypes.string,
-        second: PropTypes.string
-    }
+        second: PropTypes.string,
+        setProgress: PropTypes.func.isRequired,
+    };
 
     state = {
         articles: [],
         loading: false,
         page: 1,
         totalResults: 0
-
     };
+
     async listed() {
-        this.setState({ loading: true })
-        this.props.setProgress(30);
-        let data = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=6936648668704caba2290c5e15354045&pageSize=${this.props.pageSize}&page=${this.state.page}`;
-        this.props.setProgress(50);
-        let api = await fetch(data);
-        let url = await api.json();
-        this.props.setProgress(70);
-        this.setState({ articles: url.articles, totalResults: url.totalResults, loading: false });
-        this.props.setProgress(100);
+        try {
+            this.setState({ loading: true });
+            this.props.setProgress(30);
+
+            const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
+            const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${API_KEY}`;
+
+
+            this.props.setProgress(50);
+            const response = await fetch(url);
+            const data = await response.json();
+
+            this.props.setProgress(70);
+            this.setState({
+                articles: data.articles || [],
+                totalResults: data.totalResults || 0,
+                loading: false
+            });
+
+            this.props.setProgress(100);
+        } catch (error) {
+            console.error("Error fetching news:", error);
+            this.setState({ loading: false });
+        }
     }
-    async componentDidMount() {
+
+    componentDidMount() {
         this.listed();
-
-
     }
+
     fetchMoreData = async () => {
         try {
             const nextPage = this.state.page + 1;
-            const data = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=6936648668704caba2290c5e15354045&pageSize=${this.props.pageSize}&page=${nextPage}`;
-            const api = await fetch(data);
-            const url = await api.json();
+            const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
+            const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${API_KEY}&pageSize=${this.props.pageSize}&page=${nextPage}`;
 
-            if (url.articles.length > 0) {
-                // Check if the first three articles are the same as the existing ones
-                const areFirstThreeDuplicates = url.articles.slice(0, 3).every(newArticle =>
-                    this.state.articles.some(existingArticle => existingArticle.url === newArticle.url)
-                );
+            const response = await fetch(url);
+            const data = await response.json();
 
-                if (!areFirstThreeDuplicates) {
-                    this.setState(prevState => ({
-                        articles: [...prevState.articles, ...url.articles],
-                        totalResults: url.totalResults,
-                        page: nextPage,
-                        loading: false
-                    }));
-                } else {
-                    console.warn("Duplicate articles found in the first three. Ignoring.");
-                    this.setState({ loading: false });
-                }
+            if (data.articles?.length > 0) {
+                this.setState(prevState => ({
+                    articles: [...prevState.articles, ...data.articles],
+                    totalResults: data.totalResults,
+                    page: nextPage,
+                    loading: false
+                }));
             } else {
-                console.warn("No new articles received from the API.");
+                console.warn("No new articles received from API.");
                 this.setState({ loading: false });
             }
         } catch (error) {
-            console.error("Error fetching more data:", error);
-            // Handle the error
+            console.error("Error fetching more news:", error);
             this.setState({ loading: false });
         }
     };
 
-
-
     render() {
-       
         let { name, headColor } = this.props
         return (
             <>
