@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 
 export default class News extends Component {
     render() {
-        console.log("hello")
         let { title, description, imgUrl, btnUrl, name, author, date, cards, authorColor } = this.props;
-        console.log(description)
+        
         return (
             <div className="card">
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {name}
                     <span className="visually-hidden">unread messages</span>
                 </span>
                 <div className='body' style={typeof cards === "object" ? cards : {}}>
