@@ -1,15 +1,21 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: all 0.3s ease;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+nav{
+  display: flex;
+  justify-content: space-between;
 }
 
 .logo {
@@ -53,16 +59,54 @@ code {
 }
 
 .card {
-  margin-bottom: 50px;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border: none;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
 .card-img-top {
   height: 232px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-text {
+  color: #6c757d;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.card-footer {
+  background-color: transparent;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  padding: 0.75rem 1.25rem;
 }
 
 .start-100 {
   left: 90% !important;
-
 }
 
 .navbar {
@@ -71,12 +115,43 @@ code {
   top: 0;
   right: 0;
   width: 100%;
-  /* height: 50px; */
+  box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.nav-hover {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-hover:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white !important;
+  text-decoration: none !important;
+}
+
+.nav-hover::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.nav-hover:hover::after {
+  width: 80%;
+  left: 10%;
 }
 
 .front-image {
   width: 100%;
-
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: transform 0.3s ease;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
 
 .image-1 {
@@ -87,33 +162,40 @@ code {
 
 .image {
   width: 100%;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
-
 
 #main-row {
   margin-top: 34px;
 }
 
 .headlines {
-  font-family: "Rubik_Bubbles variant0", Tofu;
-  font-size: 68px;
-  text-decoration: underline;
-  letter-spacing: 5px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: 2px;
   padding: 25px 0 0 0;
   background: -webkit-linear-gradient(#005a6c, #ffd400);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  display: block;
+  line-height: 1.2;
 }
 
 .headlines-1 {
-  font-family: "Rubik_Bubbles variant0", Tofu;
-  font-size: 68px;
-  text-decoration: underline;
-  letter-spacing: 5px;
-  padding: 0px 0 0 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  padding: 0;
   background: -webkit-linear-gradient(#005a6c, #ffd400);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  display: block;
+  line-height: 1.2;
 }
 
 @media (max-width:762px) {
@@ -122,7 +204,6 @@ code {
     position: absolute;
     top: 549px;
   }
-
 }
 
 @media (max-width:889px) {
@@ -145,9 +226,14 @@ code {
   display: grid;
   place-items: center;
   cursor: pointer;
-  box-shadow: 0 0 50px 20px rgba(0, 0, 0, .1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   line-height: 1;
   margin-right: 20px;
+  transition: all 0.3s ease;
+}
+
+.toggle:hover {
+  transform: scale(1.1);
 }
 
 .input {
@@ -161,8 +247,7 @@ code {
 }
 
 .icon-dark {
-  height: 27px;
-
+  height: 24px;
 }
 
 .icon--moon {
@@ -170,7 +255,7 @@ code {
 }
 
 .icon--sun {
-  color: yellow;
+  color: #ffd700;
   transform: scale(0);
 }
 
@@ -179,7 +264,370 @@ code {
 }
 
 #switch:checked~.icon--sun {
-  color: yellow;
+  color: #ffd700;
   transition-delay: 200ms;
   transform: scale(1) rotate(360deg);
+}
+
+/* Badge styles for news categories */
+.badge-category {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.badge-business {
+  background-color: #4361ee;
+  color: white;
+}
+
+.badge-technology {
+  background-color: #3a0ca3;
+  color: white;
+}
+
+.badge-health {
+  background-color: #4cc9f0;
+  color: white;
+}
+
+.badge-science {
+  background-color: #4895ef;
+  color: white;
+}
+
+.badge-entertainment {
+  background-color: #f72585;
+  color: white;
+}
+
+.badge-general {
+  background-color: #560bad;
+  color: white;
+}
+
+/* Hero section enhancements */
+.headline-container {
+  position: relative;
+  z-index: 2;
+}
+
+.headlines, .headlines-1 {
+  position: relative;
+  display: inline-block;
+}
+
+.headlines::after, .headlines-1::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 5px;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(90deg, #005a6c, #ffd400);
+  transition: width 0.5s ease;
+}
+
+.headlines:hover::after, .headlines-1:hover::after {
+  width: 100%;
+}
+
+/* 3D newspaper effect */
+.image-container {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.front-image {
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+
+/* Button animations */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+  transition: all 0.6s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+/* SVG blob animation */
+@keyframes morphBlob {
+  0% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+}
+
+.image .position-absolute svg {
+  animation: morphBlob 8s ease-in-out infinite;
+}
+
+/* Fix for hero buttons */
+.hero-btn {
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: relative;
+  z-index: 10;
+  transform: none !important;
+  display: inline-block !important;
+}
+
+/* Ensure buttons are visible */
+.btn {
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+
+/* Custom Scrollbar - Main */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #0dcaea, #005a6c);
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #005a6c, #0dcaea);
+}
+
+/* Dark mode scrollbar */
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #1e2327;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #0dcaea, #005a6c);
+  border: 2px solid #1e2327;
+}
+
+/* Custom scrollbar for card elements */
+.card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card::-webkit-scrollbar-track {
+  background: rgba(241, 241, 241, 0.5);
+  border-radius: 10px;
+}
+
+.card::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #0dcaea, #005a6c);
+  border-radius: 10px;
+  border: 1px solid rgba(241, 241, 241, 0.5);
+}
+
+/* Scrollbar for horizontal scrolling elements */
+::-webkit-scrollbar:horizontal {
+  height: 8px;
+}
+
+/* Scrollbar corner */
+::-webkit-scrollbar-corner {
+  background: #f1f1f1;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-corner {
+  background: #1e2327;
+}
+
+/* Scrollbar for Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #0dcaea #f1f1f1;
+}
+
+[data-theme="dark"] * {
+  scrollbar-color: #0dcaea #1e2327;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Starry Background */
+.starry-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.4);
+  will-change: transform, opacity;
+}
+
+/* Add a glow effect for some stars */
+.star:nth-child(5n) {
+  box-shadow: 0 0 15px 2px rgba(13, 202, 234, 0.7);
+}
+
+.star:nth-child(7n) {
+  box-shadow: 0 0 15px 2px rgba(255, 212, 0, 0.7);
+}
+
+/* Shooting star animation */
+@keyframes shootingStar {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(10vw) translateY(10vh) rotate(45deg) scale(1);
+  }
+  100% {
+    transform: translateX(100vw) translateY(100vh) rotate(45deg) scale(0.2);
+    opacity: 0;
+  }
+}
+
+/* Adjust body background for stars to be visible */
+body[data-theme="dark"] {
+  background-color: #1e2327;
+  color: white;
+}
+
+body[data-theme="light"] {
+  background-color: #f8f9fa;
+  color: black;
+}
+
+/* Ensure the stars are visible in both themes */
+body[data-theme="light"] .starry-background {
+  opacity: 0.3;
+}
+
+body[data-theme="dark"] .starry-background {
+  opacity: 0.8;
+}
+
+/* Shooting Stars */
+.shooting-stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.shooting-star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 0 20px 2px rgba(255, 255, 255, 0.7);
+  will-change: transform, opacity;
+}
+
+.shooting-star::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+  transform: translateX(-100%);
+}
+
+.shooting-star-tail {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0) 0%, 
+    rgba(255,255,255,0.4) 20%, 
+    rgba(13,202,234,0.8) 60%, 
+    rgba(255,212,0,0.9) 100%
+  );
+  transform-origin: right center;
+  transform: translateX(-100%) scaleX(10);
+  border-radius: 50% 0 0 50%;
+}
+
+/* Cursor Star */
+.cursor-star {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(13,202,234,0.8) 0%, rgba(255,212,0,0.4) 50%, rgba(255,255,255,0) 100%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(3px);
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.7;
+  }
+}
+
+/* Add a subtle glow to content when hovering */
+.card:hover, .btn:hover, .nav-hover:hover {
+  position: relative;
+  z-index: 2;
 }

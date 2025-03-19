@@ -13,51 +13,70 @@ import buisness from './img/buisness.jpeg'
 import news from './img/news.png'
 import LoadingBar from 'react-top-loading-bar'
 import Footer from './components/Footer';
+import SkyBackground from './components/SkyBackground';
 // import Free from './components/Free'
 class App extends Component {
   pageSize = 3;
-  state = {
-    style: '#0dcaea',
-    color: 'black',  // default text color
-    backgroundColor: 'white',  // default background color
-    progress: 10,
-    authorColor: 'grey',
-    headColor: '#3e2d2d'
-  };
+  
+  constructor(props) {
+    super(props);
+    // Initialize state with values from localStorage or defaults
+    const savedTheme = localStorage.getItem('theme');
+    const isDarkMode = savedTheme === 'dark';
+    
+    this.state = {
+      style: isDarkMode ? 'black' : '#0dcaea',
+      color: isDarkMode ? 'white' : 'black',
+      backgroundColor: isDarkMode ? 'black' : 'white',
+      progress: 10,
+      authorColor: isDarkMode ? 'black' : 'grey',
+      headColor: isDarkMode ? '#c0b8b8' : '#3e2d2d'
+    };
+    
+    // Apply the saved theme to the body
+    document.body.style.backgroundColor = isDarkMode ? '#1e2327' : 'white';
+    
+    // Set data-theme attribute for scrollbar styling
+    document.body.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+  }
 
   setProgress = (progress) => {
     this.setState({ progress: progress });
   };
 
   toggle = () => {
-    this.setState((prevState) => ({
-      style: prevState.style === 'black' ? '#0dcaf0' : 'black',
-      color: prevState.color === 'black' ? 'white' : 'black',
-      authorColor: prevState.color === 'grey' ? 'black' : 'grey',
-      headColor: prevState.headColor === '#3e2d2d' ? '#c0b8b8' : '#3e2d2d',
-
-      backgroundColor: prevState.backgroundColor === 'white' ? 'black' : 'white', // switch default and toggled background
-    }), () => {
+    this.setState((prevState) => {
+      const newTheme = prevState.style === 'black' ? 'light' : 'dark';
+      // Save theme preference to localStorage
+      localStorage.setItem('theme', newTheme);
+      
+      // Update data-theme attribute for scrollbar styling
+      document.body.setAttribute('data-theme', newTheme);
+      
+      return {
+        style: prevState.style === 'black' ? '#0dcaf0' : 'black',
+        color: prevState.color === 'black' ? 'white' : 'black',
+        authorColor: prevState.color === 'grey' ? 'black' : 'grey',
+        headColor: prevState.headColor === '#3e2d2d' ? '#c0b8b8' : '#3e2d2d',
+        backgroundColor: prevState.backgroundColor === 'white' ? 'black' : 'white',
+      };
+    }, () => {
       document.body.style.backgroundColor = this.state.style === 'black' ? '#1e2327' : 'white';
-      // document.body.style.backgroundColor = this.state.backgroundColor;
     });
   };
-
-
-
 
   render() {
     return (
       <>
+        <SkyBackground />
         <Navbar toggle={this.toggle} style={{ backgroundColor: this.state.style }} />
         <LoadingBar
           color='rgb(218 91 131)'
           progress={this.state.progress}
           height='5px'
-
         />
         <Routes>
-          <Route path='/' element={<Newsitem headColor={{ color: this.state.headColor }} authorColor={{ color: this.state.color }} cards={{ color: this.state.color, backgroundColor: this.state.backgroundColor }} setProgress={this.setProgress} key="general" country={'us'} pageSize={this.pageSize} category={'general'} img={front} first={"Taza Khabbar"} third={"By"} second={"Developer"} img2={news} />} />
+          <Route path='/' element={<Newsitem headColor={{ color: this.state.headColor }} authorColor={{ color: this.state.color }} cards={{ color: this.state.color, backgroundColor: this.state.backgroundColor }} setProgress={this.setProgress} key="general" country={'us'} pageSize={this.pageSize} category={'general'} img={front} first={"Taza Khabbar"} second={"By"} third={"Developer"} img2={news} />} />
           <Route path='/about' element={<About />} />
 
           <Route path='/science' element={<Newsitem headColor={{ color: this.state.headColor }} authorColor={{ color: this.state.color }} cards={{ color: this.state.color, backgroundColor: this.state.backgroundColor }} setProgress={this.setProgress} key="science" country={'us'} pageSize={this.pageSize} category={'science'} img={science} first={"News"} second={"Science"} third={"Of"} />} />
@@ -69,7 +88,6 @@ class App extends Component {
           <Route path='*' element={<Error />} />
         </Routes>
         <Footer/>
-
       </>
     );
   }
